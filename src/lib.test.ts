@@ -1,6 +1,6 @@
 import { test, expect } from "bun:test";
 import { loadXeet } from "@xeet/core/node";
-import { parsePlan, matchesPlan, originalMediaUrl, extensionFor, toXeetPost, normalizePostUrl } from "./lib.mjs";
+import { parsePlan, matchesPlan, originalMediaUrl, extensionFor, toXeetPost, normalizePostUrl } from "./lib";
 
 const post = (over = {}) => ({
   id: "1", url: "https://x.com/bunjavascript/status/1", text: "bun lint is 26x faster", pinned: false,

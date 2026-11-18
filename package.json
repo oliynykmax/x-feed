@@ -2,13 +2,12 @@
   "name": "@oliynykmax/x-feed",
   "version": "0.1.0",
   "description": "Read X through a signed-in browser and render posts as xeet cards.",
-  "module": "index.ts",
   "type": "module",
   "bin": {
-    "x-feed": "./digest.mjs"
+    "x-feed": "./src/cli.ts"
   },
   "scripts": {
-    "build": "mkdir -p dist && bun build --compile --asset=./skills --outfile dist/x-feed digest.mjs",
+    "build": "mkdir -p dist && bun build --compile --asset=./skills --outfile dist/x-feed src/cli.ts",
     "test": "bun test",
     "typecheck": "bun check"
   },

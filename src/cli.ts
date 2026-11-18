@@ -3,7 +3,7 @@ import { loadXeet } from "@xeet/core/node";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { homedir } from "node:os";
-import { HELP, parsePlan, matchesPlan, statusId, originalMediaUrl, extensionFor, toXeetPost, captureArticles } from "./lib.mjs";
+import { HELP, parsePlan, matchesPlan, statusId, originalMediaUrl, extensionFor, toXeetPost, captureArticles } from "./lib";
 
 function browse(...args) {
   const p = Bun.spawnSync(["browse", ...args], { stdout: "pipe", stderr: "pipe" });
@@ -15,7 +15,11 @@ let plan;
 try { plan = parsePlan(process.argv.slice(2)); }
 catch (e) { console.error(e.message); process.exit(2); }
 if (plan.help) { console.log(HELP); process.exit(0); }
-if (plan.skill) { console.log(await readFile(new URL("./skills/x/SKILL.md", import.meta.url), "utf8")); process.exit(0); }
+if (plan.skill) {
+  const embedded = Bun.embeddedFiles.find(file => (file as File).name.endsWith("skills/x/SKILL.md"));
+  console.log(embedded ? await embedded.text() : await readFile(new URL("../skills/x/SKILL.md", import.meta.url), "utf8"));
+  process.exit(0);
+}
 
 const out = resolve(plan.output || resolve(process.env.XDG_DATA_HOME || resolve(homedir(), ".local/share"), "x-feed/runs",
   new Date().toISOString().replaceAll(":", "-") + "-" + crypto.randomUUID().slice(0, 8)));

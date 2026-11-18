@@ -122,23 +122,28 @@ export async function captureArticles({ seen = [], only, settleMs = 700, pageWai
   for (const t0 = Date.now(); !blocked() && !document.querySelector("article, [data-testid=emptyState]") && Date.now() - t0 < pageWaitMs;)
     await sleep(200);
   if (blocked()) return { blocked: location.href, items: [] };
-  const quoteOf = a => Array.from(a.querySelectorAll("div[role=link]")).find(d => d.querySelector("[data-testid=User-Name]"));
-  const mediaNodes = a => {
+  const quoteOf = (a: Element) => Array.from(a.querySelectorAll<HTMLElement>("div[role=link]")).find(d => d.querySelector("[data-testid=User-Name]"));
+  const mediaNodes = (a: Element) => {
     const quote = quoteOf(a);
-    return Array.from(a.querySelectorAll("[data-testid=tweetPhoto], [data-testid=videoPlayer]"))
-      .filter(n => !n.parentElement.closest("[data-testid=tweetPhoto], [data-testid=videoPlayer]") && !quote?.contains(n));
+    return Array.from(a.querySelectorAll<HTMLElement>("[data-testid=tweetPhoto], [data-testid=videoPlayer]"))
+      .filter(n => !n.parentElement?.closest("[data-testid=tweetPhoto], [data-testid=videoPlayer]") && !quote?.contains(n));
   };
-  const ownTime = a => Array.from(a.querySelectorAll("time")).find(t => !quoteOf(a)?.contains(t));
-  const articleId = a => {
-    const href = ownTime(a)?.closest("a")?.href
+  const ownTime = (a: Element) => Array.from(a.querySelectorAll<HTMLTimeElement>("time")).find(t => !quoteOf(a)?.contains(t));
+  const articleId = (a: HTMLElement) => {
+    const href = ownTime(a)?.closest<HTMLAnchorElement>("a")?.href
       || (a === document.querySelector("article") && /\/status\/\d+/.test(location.pathname) ? location.href : undefined);
     const m = href?.match(/^(.*\/status\/(\d+))/);
     return m ? { url: m[1], id: m[2] } : {};
   };
-  const plainText = node => Array.from(node.childNodes).map(c =>
-    c.nodeType === Node.TEXT_NODE ? c.data : c.tagName === "A" ? c.textContent : c.tagName === "IMG" ? c.alt : c.tagName === "BR" ? "\n" : plainText(c)).join("");
-  const loaded = a => mediaNodes(a).length > 0 && mediaNodes(a).every(n => {
-    const v = n.querySelector("video"), i = n.querySelector("img");
+  const plainText = (node: Node): string => Array.from(node.childNodes).map(c => {
+    if (c.nodeType === Node.TEXT_NODE) return (c as Text).data;
+    if (!(c instanceof Element)) return "";
+    if (c.tagName === "A") return c.textContent;
+    if (c.tagName === "IMG") return (c as HTMLImageElement).alt;
+    return c.tagName === "BR" ? "\n" : plainText(c);
+  }).join("");
+  const loaded = (a: HTMLElement) => mediaNodes(a).length > 0 && mediaNodes(a).every(n => {
+    const v = n.querySelector<HTMLVideoElement>("video"), i = n.querySelector<HTMLImageElement>("img");
     return v ? !!v.poster : !!(i && i.complete && i.naturalWidth);
   });
   const items = [], skip = new Set(seen);
@@ -158,11 +163,11 @@ export async function captureArticles({ seen = [], only, settleMs = 700, pageWai
     a.scrollIntoView({ block: "center" });
     const t0 = Date.now();
     while (!loaded(a) && Date.now() - t0 < settleMs) await sleep(50);
-    const user = a.querySelector("[data-testid=User-Name]")?.innerText.split("\n") || [];
+    const user = a.querySelector<HTMLElement>("[data-testid=User-Name]")?.innerText.split("\n") || [];
     const quote = quoteOf(a);
-    const textNode = Array.from(a.querySelectorAll("[data-testid=tweetText]")).find(n => !quote?.contains(n));
+    const textNode = Array.from(a.querySelectorAll<HTMLElement>("[data-testid=tweetText]")).find(n => !quote?.contains(n));
     const media = mediaNodes(a).map(n => {
-      const video = n.querySelector("video"), img = n.querySelector("img"), box = n.getBoundingClientRect();
+      const video = n.querySelector<HTMLVideoElement>("video"), img = n.querySelector<HTMLImageElement>("img"), box = n.getBoundingClientRect();
       if (video) return {
         kind: /tweet_video_thumb/.test(video.poster) ? "gif" : "video", url: video.poster,
         width: video.videoWidth || Math.round(box.width), height: video.videoHeight || Math.round(box.height),
@@ -178,9 +183,9 @@ export async function captureArticles({ seen = [], only, settleMs = 700, pageWai
       id, url,
       text: textNode ? plainText(textNode) : "",
       truncated: !!a.querySelector("[data-testid=tweet-text-show-more-link]"),
-      pinned: /Pinned/.test(a.querySelector("[data-testid=socialContext]")?.innerText || ""),
+      pinned: /Pinned/.test(a.querySelector<HTMLElement>("[data-testid=socialContext]")?.innerText || ""),
       author: { name: user[0], handle: user.find(t => t.startsWith("@"))?.slice(1) },
-      avatarUrl: a.querySelector("img[src*='pbs.twimg.com/profile_images/']")?.src,
+      avatarUrl: a.querySelector<HTMLImageElement>("img[src*='pbs.twimg.com/profile_images/']")?.src,
       createdAt: time?.dateTime, now: new Date().toISOString(),
       media, quoted: !!quote,
     });

@@ -6,6 +6,8 @@
 
 _Example card captured from a live [@anomalyco post](https://x.com/anomalyco/status/2122798464535089382)._
 
+The implementation lives under [`src/`](src/): `cli.ts`, `lib.ts`, and `lib.test.ts`. The repository root contains only project configuration, docs, skill instructions, and assets.
+
 ## Requirements
 
 - [Bun](https://bun.sh/)
