@@ -5,7 +5,7 @@
     "": {
       "name": "@oliynykmax/x-feed",
       "dependencies": {
-        "@xeet/core": "0.1.1",
+        "@xeet/core": "0.1.2",
       },
       "devDependencies": {
         "@types/bun": "latest",
@@ -60,7 +60,7 @@
 
     "@typescript/typescript-win32-x64": ["@typescript/typescript-win32-x64@7.0.2", "", { "os": "win32", "cpu": "x64" }, "sha512-0BQ3HkAHHlKLSp1qRvf3SUhGpGsDuhB/jgFw75guyqbxJqEaS0Cw/VFO8i2nHglJUzQCRtMMR/IBAKE3ETMC4g=="],
 
-    "@xeet/core": ["@xeet/core@0.1.1", "", {}, "sha512-7a8ltP7zKyNfUUDSQD9usYX/Rk8NGmmIjJ3feIEl/eCiIpymAMmKQt3Geg+uCz+FGJ63/YsItMulkRAkazfrSQ=="],
+    "@xeet/core": ["@xeet/core@0.1.2", "", {}, "sha512-t2LSqZVRM6jLcX0Znjy5IldJTLluXAUcj58pv8lA0x0vaW9jwwHzS0sxZ8lEqSg5lI/xgoW842bn4z2BgNDUAQ=="],
 
     "bun-types": ["bun-types@1.4.4", "", { "dependencies": { "@types/node": "*", "undici-types": "*" } }, "sha512-yjrJh5oGX7mMPKGd19YXyIjmEuj4G4zNC30bs7PM9Az7NQ3ndF3j6hbeRdvJTRQEhJ/FYQwW0a2moweEi2hMxQ=="],
 
