@@ -1,9 +1,9 @@
 #!/usr/bin/env bun
-import { loadXeet } from "@xeet/core/node";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { homedir } from "node:os";
 import { HELP, parsePlan, matchesPlan, statusId, originalMediaUrl, extensionFor, toXeetPost, captureArticles } from "./lib";
+import { loadXFeedXeet } from "./xeet";
 
 function browse(...args) {
   const p = Bun.spawnSync(["browse", ...args], { stdout: "pipe", stderr: "pipe" });
@@ -88,7 +88,7 @@ async function run() {
       if (post.truncated || !post.avatarUrl) posts[i] = { ...captureExact(post.url), pinned: post.pinned };
   }
 
-  const xeet = await loadXeet();
+  const xeet = await loadXFeedXeet();
   const entries = [];
   for (const [i, post] of posts.entries()) {
     const n = String(i + 1).padStart(2, "0");

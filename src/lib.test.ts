@@ -1,6 +1,6 @@
 import { test, expect } from "bun:test";
-import { loadXeet } from "@xeet/core/node";
 import { parsePlan, matchesPlan, originalMediaUrl, extensionFor, toXeetPost, normalizePostUrl } from "./lib";
+import { loadXFeedXeet } from "./xeet";
 
 const post = (over = {}) => ({
   id: "1", url: "https://x.com/bunjavascript/status/1", text: "bun lint is 26x faster", pinned: false,
@@ -78,7 +78,7 @@ test("media URLs are upgraded to the original resolution", () => {
 });
 
 test("a captured post with a chart renders a card taller than its text-only version", async () => {
-  const xeet = await loadXeet();
+  const xeet = await loadXFeedXeet();
   const pixel = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==";
   const withMedia = toXeetPost(post({ media: [chart] }), undefined, [pixel]);
   expect(withMedia.media).toEqual([{ kind: "image", width: 1200, height: 1200, data: pixel, alt: "Table of lint times" }]);

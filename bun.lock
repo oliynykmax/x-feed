@@ -3,9 +3,9 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "2026-11-16-upgrade-browse-mcp-installation-of-4ad810a4",
+      "name": "@oliynykmax/x-feed",
       "dependencies": {
-        "@xeet/core": "^0.1.1",
+        "@xeet/core": "0.1.1",
       },
       "devDependencies": {
         "@types/bun": "latest",

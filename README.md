@@ -13,6 +13,10 @@ The implementation lives under [`src/`](src/): `cli.ts`, `lib.ts`, and `lib.test
 - [Bun](https://bun.sh/)
 - The [`browse` CLI from Anomaly](https://github.com/anomalyco/browse), connected to a browser session that is signed in to X
 
+## Rendering engine
+
+`x-feed` installs [`@xeet/core`](https://github.com/rauchg/xeet) as a project dependency. It renders post cards through that local JavaScript/WASM library; it never shells out to, or requires, a globally installed `xeet` executable. The standalone build bundles the renderer with the CLI.
+
 ## Install
 
 ```sh

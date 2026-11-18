@@ -7,7 +7,7 @@
     "x-feed": "./src/cli.ts"
   },
   "scripts": {
-    "build": "mkdir -p dist && bun build --compile --asset=./skills --outfile dist/x-feed src/cli.ts",
+    "build": "mkdir -p dist && bun build --compile --asset=./skills --asset=./node_modules/@xeet/core/wasm --outfile dist/x-feed src/cli.ts",
     "test": "bun test",
     "typecheck": "bun check"
   },
@@ -18,6 +18,6 @@
     "typescript": "^7"
   },
   "dependencies": {
-    "@xeet/core": "^0.1.1"
+    "@xeet/core": "0.1.1"
   }
 }
