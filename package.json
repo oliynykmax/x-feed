@@ -1,0 +1,23 @@
+{
+  "name": "@oliynykmax/x-feed",
+  "version": "0.1.0",
+  "description": "Read X through a signed-in browser and render posts as xeet cards.",
+  "module": "index.ts",
+  "type": "module",
+  "bin": {
+    "x-feed": "./digest.mjs"
+  },
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "bun check"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^7"
+  },
+  "dependencies": {
+    "@xeet/core": "^0.1.1"
+  }
+}
