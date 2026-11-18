@@ -1,4 +1,8 @@
 node_modules/
 runs/
+dist/
+assets/x-feed-card.png
+assets/real-post/manifest.json
+assets/real-post/message.md
 .env
 .env.*

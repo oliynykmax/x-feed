@@ -8,6 +8,7 @@
     "x-feed": "./digest.mjs"
   },
   "scripts": {
+    "build": "mkdir -p dist && bun build --compile --asset=./skills --outfile dist/x-feed digest.mjs",
     "test": "bun test",
     "typecheck": "bun check"
   },
