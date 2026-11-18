@@ -7,7 +7,7 @@
     "x-feed": "./src/cli.ts"
   },
   "scripts": {
-    "build": "mkdir -p dist && bun build --compile --bytecode --format=esm --asset=./skills --asset=./node_modules/@xeet/core/wasm --outfile dist/x-feed src/cli.ts",
+    "build": "mkdir -p dist && bun build --compile --aot --strip --format=esm --asset=./skills --asset=./node_modules/@xeet/core/wasm --outfile dist/x-feed src/cli.ts",
     "test": "bun test",
     "typecheck": "bun check"
   },

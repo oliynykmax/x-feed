@@ -39,7 +39,7 @@ Each run writes PNG cards, the original media when available, `manifest.json`, a
 
 ## Build a standalone CLI
 
-The standard local distribution is a self-contained executable built with Bun's compiler. It uses Bun's bytecode cache and embeds xeet's renderer and font packs plus the agent skill. It still uses the installed `browse` CLI to reach the signed-in browser.
+The standard local distribution is a self-contained executable built with Bun's compiler. It uses Bun Canary's ahead-of-time compiler with stripping, and embeds xeet's renderer and font packs plus the agent skill. It still uses the installed `browse` CLI to reach the signed-in browser.
 
 ```sh
 bun run build
